@@ -1,7 +1,7 @@
-export function Input({name , placeholder , type}){
+export function Input({name , placeholder , onChange , type}){
     return (
         <>
-            <input name={name} placeholder={placeholder} type={type} required/>
+            <input name={name} onChange={onChange} placeholder={placeholder} type={type} required/>
         </>
     )
 }
