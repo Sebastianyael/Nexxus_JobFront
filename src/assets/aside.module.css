@@ -1,0 +1,10 @@
+.aside{
+    background-color: var(--background-card);
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    grid-row: 1/4;
+    font-family: var(--font-family);
+}
+

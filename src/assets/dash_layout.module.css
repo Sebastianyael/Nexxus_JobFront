@@ -1,0 +1,100 @@
+.main{
+    width: 100%;
+    min-height: 100vh;
+    background-color: red;
+    display: grid;
+    grid-template-columns: 300px auto auto;
+    grid-template-rows: repeat(3 , 1fr);
+    
+}
+
+.p{
+    color: var(--secondary-color);
+    font-size: 13px;
+}
+
+
+.button{
+    background-color: transparent;
+    border: none;
+    color: var(--secondary-color);
+    height: 50px;
+    border-radius: 20PX;
+    display: flex;
+    padding: 1rem;
+    
+}
+
+
+.button:hover ,  .button_secondary:hover{
+    color: black;
+    background-color: var(--main-color);
+    transform: translateX(2px);
+    transition: 0.4s ease all;
+    cursor: pointer;
+}
+
+
+.containerFiltro{
+    display: flex;
+    gap: 10px;
+}
+
+.button_secondary{
+    background-color: transparent;
+    border: 1px solid rgb(132, 130, 130);
+    color: var(--secondary-color);
+    height: 50px;
+    border-radius: 20PX;
+    display: flex;
+    padding: 1rem;
+    
+    max-width: 100px;
+}
+
+.vacantes_container{
+    max-width: 100%;
+    overflow: scroll;
+    max-height: 66vh;
+    background-color: transparent;
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.vacante{
+    background-color: var(--background-card);
+    padding: 1rem;
+    width: 560px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+   justify-content: space-evenly;
+}
+
+
+::-webkit-scrollbar {
+    width: 8px;  
+    height: 8px; 
+}
+
+::-webkit-scrollbar-track {
+    background: #1e1e1e;
+    border-radius: 10px;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 10px;
+    border: 2px solid #1e1e1e;
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+    background: #5a5a5a
+}

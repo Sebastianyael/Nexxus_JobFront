@@ -1,7 +1,10 @@
-export function Button({text,className}){
+export function Button({text,className , children}){
     return (
         <>
-            <button type="submit" className={className}>{text}</button>
+            <button type="submit" className={className}>
+                {children}
+                {text}
+            </button>
         </>
     )
 }

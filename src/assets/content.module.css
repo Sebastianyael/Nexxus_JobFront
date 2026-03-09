@@ -1,0 +1,8 @@
+.content{
+    background-color: var(--background-color);
+    grid-row: 1/4;
+    grid-column: 2/4;
+    padding: 1rem;
+    font-family: var(--font-family);
+    color: white;
+}
