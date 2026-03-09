@@ -36,7 +36,9 @@ export default function DashboardStudent({children}){
             <Aside>
                 <h2 style={{color: 'var(--main-color)'}}>Nexxus Job</h2>
                 <p className={styles.p}>Navegacion</p>
-                <Button className={styles.button} text={"Panel General"} />
+                <Button className={styles.button} text={"Panel General"} >
+                    
+                </Button>
                 <Button className={styles.button} text={"Postulaciones"} />
                 <p className={styles.p}>Cuenta</p>
                 <Button className={styles.button} text={"Mi cuenta"} />

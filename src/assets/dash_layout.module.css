@@ -21,8 +21,13 @@
     height: 50px;
     border-radius: 20PX;
     display: flex;
+    align-items: center;
     padding: 1rem;
     
+}
+
+.icon{
+    font-size: 20px;
 }
 
 

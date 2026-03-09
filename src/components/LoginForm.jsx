@@ -4,6 +4,8 @@ import { Button } from "./Button";
 import api from "../api/axios"; 
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
+
 
 import styles from '../assets/login-form.module.css'
 
@@ -45,7 +47,7 @@ export function LoginForm() {
             
             const tipo = response.data.tipo;
 
-            if(tipo == "Alumno"){
+            if(tipo == "alumno"){
                 goToDashStudent()
 
             }else if(tipo == "Instructor"){
@@ -73,7 +75,7 @@ export function LoginForm() {
                 Ingresa tus credenciales para acceder a tu panel
             </p>
             <br />
-            {/* 4. Conectar el formulario al handleSubmit */}
+    
             <form onSubmit={handleSubmit} className={styles.form}>
                 <label htmlFor="email">Correo Electrónico</label>
                 <Input 
@@ -101,9 +103,8 @@ export function LoginForm() {
 
             <div  className={styles.register_link}>
                 <p>¿No tienes una cuenta?</p>
-                <a style={{ color: 'var(--main-color)', textDecoration: 'none' }} href="#">
-                    Regístrate Ahora
-                </a>
+
+                <Link style={{ color: 'var(--main-color)', textDecoration: 'none' }} title="Registrate Ahora" to="/registroAlumno">Registrate Ahora</Link>
             </div>
         </div>
         </>
