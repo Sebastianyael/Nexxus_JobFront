@@ -1,7 +1,7 @@
-export function Button({text}){
+export function Button({text,className}){
     return (
         <>
-            <button type="submit">{text}</button>
+            <button type="submit" className={className}>{text}</button>
         </>
     )
 }

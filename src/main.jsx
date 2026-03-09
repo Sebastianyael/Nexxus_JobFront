@@ -1,10 +1,13 @@
-import { StrictMode } from 'react'
+
+import { BrowserRouter } from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
-import { LoginForm } from './components/LoginForm'
+import App from './App'
 
 
-createRoot(document.getElementById('login-container')).render(
+createRoot(document.getElementById('root')).render(
   <>
-    <LoginForm></LoginForm>
+    <BrowserRouter>
+      <App></App>
+    </BrowserRouter>
   </>
 )
