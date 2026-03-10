@@ -7,7 +7,6 @@ function App(){
     <Routes>
       <Route path="/" element={<LoginForm/>}/>
       <Route path="/DashboardStudent" element={<DashboardStudent/>} />
-
       <Route path="/registroAlumno" element={<RegistroAlumno/>} />
     </Routes>
   )

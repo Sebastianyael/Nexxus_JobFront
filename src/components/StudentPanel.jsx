@@ -2,11 +2,32 @@ import api from '../api/axios'
 import styles from '../assets/dash_layout.module.css'
 import { useEffect, useState } from "react";
 import { Button } from './Button';
+import { useLocation } from 'react-router-dom';
+
+
+
 export default function StudentPerfil({children}){
     const [vacantes, setVacantes] = useState([]);
-    const [cargando, setCargando] = useState(true);
+    const location = useLocation()
+    const alumnoId = location.state?.user.alumnoId;
 
-   
+    const postulacion = async(vacanteId) => {
+        try{
+            const response = await api.post('/postulaciones' , {
+                alumno_id : alumnoId,
+                vacante_id : vacanteId,
+                estatus : 'pendiente'
+            })
+            if (response.status === 200 || response.status === 201) {
+                alert("¡Postulación enviada con éxito!");
+            }
+        }catch(error){
+            console.error('Error en la postulacion' , error)
+            alert('Hubo un error en la postulacion')
+        }
+    }
+
+
     useEffect(() => {
         const obtenerVacantes = async () => {
             try {
@@ -17,16 +38,20 @@ export default function StudentPerfil({children}){
             } catch (error) {
                 console.error("Error al obtener vacantes:", error);
             } finally {
-                setCargando(false); 
+                console.log('namas')
             }
         };
     
         obtenerVacantes();
     }, []);
 
+
+
     return (
         <>
              <h1>¡Bienvenido de Nuevo!</h1>
+             
+
                 <br /><br />
                 <p>Filtrar Oportunidades</p>
                 <br />
@@ -59,7 +84,10 @@ export default function StudentPerfil({children}){
                             {vacante.requisitos}
                         </p>
               
-                        <Button text='Postularse' className={styles.button_secondary}></Button>
+
+                        <Button text='Postularse' onClick={() => postulacion(vacante.id)} className={styles.button_secondary}>
+
+                        </Button>
                     </div>
                 ))}
 

@@ -22,9 +22,6 @@ export default function DashboardStudent({children}){
     }
     
 
-   
-   
-
     return (
         <main className={styles.main}>
             <Aside>

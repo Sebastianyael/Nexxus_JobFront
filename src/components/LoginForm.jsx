@@ -10,10 +10,7 @@ import { Link } from "react-router-dom";
 import styles from '../assets/login-form.module.css'
 
 export function LoginForm() {
-    const navigate = useNavigate()  
-    function goToDashStudent(){
-        navigate('/DashboardStudent' , {replace:true})
-    }
+    const navigate = useNavigate()
     const [credentials, setCredentials] = useState({
         correo: '',
         contraseña: ''
@@ -44,11 +41,12 @@ export function LoginForm() {
         try {
             const response = await api.post('/login', credentials);
             console.log("Respuesta de Laravel:", response.data);
-            
+     
             const tipo = response.data.tipo;
 
             if(tipo == "alumno"){
-                goToDashStudent()
+                const usuarioInfo = response.data
+                navigate('/DashboardStudent' , {state: {user : usuarioInfo}})
 
             }else if(tipo == "Instructor"){
                 alert("Redirgiendo al dashboard del instructor")
