@@ -1,9 +1,9 @@
-export function Button({text,className , children}){
+export function Button({text,className , children , onClick}){
     return (
         <>
-            <button type="submit" className={className}>
-                {children}
+            <button type="submit" onClick={onClick} className={className}>
                 {text}
+                {children}
             </button>
         </>
     )
