@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Aside } from "../components/Aside"
 import Content from "../components/Content"
 import { Button } from "../components/Button"
+import StudentPostulaciones from "../components/StudentPostulaciones";
 import styles from '../assets/dash_layout.module.css'
 
 import StudentPanel from "../components/StudentPanel";
@@ -9,7 +10,7 @@ import StudentPanel from "../components/StudentPanel";
 
 
 const PanelPrincipal =  () => <div>PanelPrincipal</div>
-const Postulaciones =  () => <div>Postulaciones</div>
+
 
 
 export default function DashboardStudent({children}){
@@ -17,7 +18,7 @@ export default function DashboardStudent({children}){
     
     const components = {
         perfil : <PanelPrincipal/>,
-        postulaciones : <Postulaciones/>,
+        postulaciones : <StudentPostulaciones/>,
         panelPrincipal : <StudentPanel/>
     }
     

@@ -5,6 +5,7 @@
     display: grid;
     grid-template-columns: 300px auto auto;
     grid-template-rows: repeat(3 , 1fr);
+    color: var(--secondary-color);
     
 }
 
@@ -23,6 +24,7 @@
     display: flex;
     align-items: center;
     padding: 1rem;
+    width: auto;
     
 }
 
@@ -80,6 +82,36 @@
     border-radius: 15px;
    justify-content: space-evenly;
 }
+
+.postulaciones_container{
+    max-width: 100%;
+    height: auto;
+    min-height: 90vh;
+    overflow: scroll;
+    max-height: 66vh;
+    background-color: transparent;
+    display: flex;
+    padding: 10px;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 1rem;
+    
+}
+
+.postulacion{
+    background-color: var(--background-card);
+    padding: 1rem;
+    width: 560px;
+    height: 330px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 15px;
+    gap: 20px;
+    box-sizing: border-box;
+    max-height: 60vh;
+   
+}
+
 
 
 ::-webkit-scrollbar {
