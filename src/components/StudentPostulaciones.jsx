@@ -9,6 +9,18 @@ export default function StudentPostulaciones() {
     const location = useLocation();
     const alumnoId = location.state?.user?.alumnoId;
 
+    const eliminarPostulacion = async (postulacionId) => {
+            try{
+                const response = await api.delete(`/postulaciones/${postulacionId}`)
+                if(response.status === 200){
+                    alert("Postulacion cancelada")
+                    window.location.reload()
+                }
+            }catch (error){
+                console.error("Error al eliminar la postulacion" , error)
+            }
+    }
+
     useEffect(() => {
         const obtenerVacantes = async () => {
             if (!alumnoId) return;
@@ -52,7 +64,7 @@ export default function StudentPostulaciones() {
                            
                            <div style={{display : 'flex' , alignItems: 'center' , justifyContent: 'space-around' , color: 'gray'}}>
                             <p style={{fontSize: '13px'}}>{item.estatus}</p>
-                            <Button className={styles.button}>Cancelar Postulacione</Button>
+                            <Button className={styles.button} onClick={() => eliminarPostulacion(item.id)}>Cancelar Postulacione</Button>
                            </div>
 
                            <div style={{display : 'flex' , justifyContent: 'space-around' , color: 'gray'}}>
