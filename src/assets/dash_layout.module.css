@@ -146,6 +146,31 @@
         color: var(--main-color);
     }
 
+.eliminarButton{
+    transition: 0.3s ease all;
+    color: red;
+    font-size: 11px;
+    padding: 10px;
+    display: flex;
+    place-content: center;
+    gap: 10px;
+    border : none;
+    background-color: transparent;
+    border-radius: 10px;
+    width: 100%;
+
+}
+
+.eliminarButton:hover{
+        border: none;
+        background-color: black;
+        cursor: pointer;
+        transition: 0.3s ease all;
+        
+    }
+
+
+
 
 
 ::-webkit-scrollbar {

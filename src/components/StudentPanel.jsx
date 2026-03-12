@@ -49,7 +49,11 @@ export default function StudentPerfil({children}){
 
     return (
         <>
-             <h1>¡Bienvenido de Nuevo! {alumnoId }</h1>
+
+
+             <h1>¡Bienvenido de Nuevo!</h1>
+            
+            
             
                 <br /><br />
                 <p>Filtrar Oportunidades</p>

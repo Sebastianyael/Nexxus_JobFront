@@ -6,11 +6,16 @@ import StudentPostulaciones from "../components/StudentPostulaciones";
 import StudentPanel from "../components/StudentPanel";
 import styles from '../assets/dash_layout.module.css';
 import StudenCuenta from "../components/StudentCuenta";
-
+import {  useNavigate } from "react-router-dom";
 
 
 export default function DashboardStudent({ children }) {
-        const [activeTab, setActiveTab] = useState(localStorage.getItem('lastSection') || 'panelPrincipal');
+    const [activeTab, setActiveTab] = useState(localStorage.getItem('lastSection') || 'panelPrincipal');
+    const navigate = useNavigate();
+
+    function goToLogin(){
+        navigate('/' , {replace:true})
+    }
 
     
     const cambiarTab = (tabNombre) => {
@@ -47,6 +52,12 @@ export default function DashboardStudent({ children }) {
                     className={`${styles.button} ${activeTab === 'perfil' ? styles.active : ''}`} 
                     text={"Mi cuenta"} 
                 />
+
+                <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'370px'}}>
+                <Button onClick={() => goToLogin()} className={styles.eliminarButton} text={'Cerrar Sesion'}/>
+                <Button className={styles.eliminarButton} text={'Eliminar Cuenta'}/>
+                </div>
+
             </Aside>
 
             <Content>

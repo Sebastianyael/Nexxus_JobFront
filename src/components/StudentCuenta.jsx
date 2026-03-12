@@ -74,7 +74,7 @@ export default function StudenCuenta(){
     }
     return(
         <>
-            <h1>Mi cuenta {userId}</h1>
+            <h1>Mi cuenta </h1>
 
             <form className={dashStyles.miCuentaForm} onSubmit={(e) => handleSubmit(e, alumno.alumno.id)} >
                 <div className={styles.formGroup}>
