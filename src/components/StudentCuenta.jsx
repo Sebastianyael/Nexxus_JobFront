@@ -1,0 +1,160 @@
+import styles from '../assets/register-alumno.module.css'
+import dashStyles from '../assets/dash_layout.module.css'
+import api from '../api/axios';
+import { useState , useEffect } from 'react';
+import { Input } from './Input';
+import { Button } from './Button';
+import { useLocation } from 'react-router-dom';
+
+
+export default function StudenCuenta(){
+    const [carreras, setCarreras] = useState([]);
+    const [alumno, setAlumno] = useState(null); 
+    const [enviando, setEnviando] = useState(false);
+
+    const location = useLocation();
+    const userId = location.state?.user?.alumnoId; 
+
+
+
+    useEffect(() => {
+        const userInfo = async () => {
+        try {
+            const response = await api.get(`/usuarios/alumnos/${userId}`);
+            console.log(response.data)
+            setAlumno(response.data);
+        } catch (error) {
+            console.error("Error al obtener la info:", error);
+            alert("Hubo un problema al obtener la info");
+        }
+    };
+
+    userInfo();
+}, [userId]); 
+    
+    useEffect(() => {
+        const obtenerCarreras = async () => {
+            try {
+                const response = await api.get('/carreras');
+                setCarreras(response.data.carreras);
+            } catch (error) {
+                console.error("Error al cargar las carreras:", error);
+            }
+        };
+        obtenerCarreras();
+    }, []);
+
+  
+    const handleSubmit = async (e , id) => {
+        e.preventDefault();
+        setEnviando(true);
+
+
+        const formData = new FormData(e.currentTarget);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await api.put(`/usuarios/alumnos/${id}`, data);
+            
+            if (response.status === 200 || response.status === 201) {
+                alert("¡Cuenta actualizada con éxito!");
+                
+               
+            }
+        } catch (error) {
+            console.error("Error al registrar:", error.response?.data || error.message);
+            alert("Hubo un error al actualizar la cuenta. Revisa los datos.");
+        } finally {
+            setEnviando(false);
+        }
+    };
+
+    if (!alumno) {
+        return <div className={dashStyles.loading}>Cargando datos del perfil...</div>;
+    }
+    return(
+        <>
+            <h1>Mi cuenta {userId}</h1>
+
+            <form className={dashStyles.miCuentaForm} onSubmit={(e) => handleSubmit(e, alumno.alumno.id)} >
+                <div className={styles.formGroup}>
+                    <label htmlFor="nombre">Nombre</label>
+                    <Input   name="nombre"  type="text" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.nombre}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="apellido_p">Apellido Paterno</label>
+                    <Input   name="apellido_p"  type="text" required className={dashStyles.input}  defaultValue={alumno.alumno.usuario.apellido_p}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="apellido_m">Apellido Materno</label>
+                    <Input  name="apellido_m"  type="text" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.apellido_m}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="email">Email</label>
+                    <Input  name="email"  type="email" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.email}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="telefono">Teléfono</label>
+                    <Input  name="telefono"  type="number" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.telefono}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="contraseña">Contraseña</label>
+                    <Input  name="contraseña"  type="password" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.contraseña}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="fecha_nacimiento">Fecha de Nacimiento</label>
+                    <Input  name="fecha_nacimiento" type="date" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.fecha_nacimiento} />
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="genero">Género</label>
+                    <select name="genero" className={dashStyles.input} defaultValue={alumno.alumno.usuario.genero} required>
+                        <option value="masculino">Masculino</option>
+                        <option value="femenino">Femenino</option>
+                    </select>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="matricula">Matricula</label>
+                    <Input  name="matricula" type="number" required className={dashStyles.input} defaultValue={alumno.alumno.matricula}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="curriculum">Curriculumn</label>
+                    <Input  name="curriculum" type="text" required className={dashStyles.input} defaultValue={alumno.alumno.curriculum}/>
+                </div>
+
+                <div className={styles.formGroup}>
+                    <label htmlFor="carrera">Carrera</label>
+                    <select name="carrera_id" className={dashStyles.input}  required>
+                        <option defaultValue={alumno.alumno.carrera.id}>{alumno.alumno.carrera.nombre}</option>
+                        {carreras.map((carrera) => (
+
+                            <option key={carrera.id} value={carrera.id}>
+                                {carrera.nombre}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+
+                <Input name="tipo" type='hidden' value="alumno" />
+
+                <br />
+                <Button 
+                    text={enviando ? "Cargando..." : "Actualizar "} 
+                    type="submit" 
+                    className={styles.button} 
+                    disabled={enviando}
+                  
+                />
+            </form>
+        
+        </>
+    )
+}

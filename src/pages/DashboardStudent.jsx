@@ -5,21 +5,21 @@ import { Button } from "../components/Button";
 import StudentPostulaciones from "../components/StudentPostulaciones";
 import StudentPanel from "../components/StudentPanel";
 import styles from '../assets/dash_layout.module.css';
+import StudenCuenta from "../components/StudentCuenta";
 
-const PanelPrincipal = () => <div>Mi Perfil / Cuenta</div>;
+
 
 export default function DashboardStudent({ children }) {
-    // 1. Inicializamos el estado directamente desde localStorage
-    const [activeTab, setActiveTab] = useState(localStorage.getItem('lastSection') || 'panelPrincipal');
+        const [activeTab, setActiveTab] = useState(localStorage.getItem('lastSection') || 'panelPrincipal');
 
-    // 2. Función para cambiar de pestaña y guardar en el navegador
+    
     const cambiarTab = (tabNombre) => {
         setActiveTab(tabNombre);
         localStorage.setItem('lastSection', tabNombre);
     };
 
     const components = {
-        perfil: <PanelPrincipal />,
+        perfil: <StudenCuenta/>,
         postulaciones: <StudentPostulaciones />,
         panelPrincipal: <StudentPanel />
     };
@@ -30,7 +30,6 @@ export default function DashboardStudent({ children }) {
                 <h2 style={{ color: 'var(--main-color)' }}>Nexxus Job</h2>
                 <p className={styles.p}>Navegación</p>
                 
-                {/* 3. Usamos cambiarTab en lugar de setActiveTab directamente */}
                 <Button 
                     onClick={() => cambiarTab('panelPrincipal')} 
                     className={`${styles.button} ${activeTab === 'panelPrincipal' ? styles.active : ''}`} 
@@ -51,7 +50,6 @@ export default function DashboardStudent({ children }) {
             </Aside>
 
             <Content>
-                {/* 4. Renderizamos basado en el estado persistente */}
                 {components[activeTab]}
                 {children}
             </Content>
