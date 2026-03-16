@@ -7,11 +7,48 @@ import StudentPanel from "../components/StudentPanel";
 import styles from '../assets/dash_layout.module.css';
 import StudenCuenta from "../components/StudentCuenta";
 import {  useNavigate } from "react-router-dom";
-
+import api from "../api/axios";
+import { useLocation } from "react-router-dom";
 
 export default function DashboardStudent({ children }) {
     const [activeTab, setActiveTab] = useState(localStorage.getItem('lastSection') || 'panelPrincipal');
     const navigate = useNavigate();
+
+    const location = useLocation();
+
+    const userId = location.state?.user?.usuarioId; 
+
+
+
+    const [eliminando, setEliminando] = useState(false);
+
+    const deleteCount = async (id) => {
+      
+        const confirmar = window.confirm("¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.");
+        
+        if (!confirmar) return;
+
+        setEliminando(true);
+        
+        try {
+            const response = await api.delete(`/usuarios/alumnos/${id}`);
+            
+            if (response.status === 200 || response.status === 204) {
+                alert("Cuenta eliminada correctamente.");
+                
+                
+                localStorage.removeItem('token'); 
+                
+              
+                navigate('/', { replace: true });
+            }
+        } catch (error) {
+            console.error('Hubo un error al eliminar la cuenta', error);
+            alert("No se pudo eliminar la cuenta. Inténtalo de nuevo.");
+        } finally {
+            setEliminando(false);
+        }
+    };
 
     function goToLogin(){
         navigate('/' , {replace:true})
@@ -32,7 +69,7 @@ export default function DashboardStudent({ children }) {
     return (
         <main className={styles.main}>
             <Aside>
-                <h2 style={{ color: 'var(--main-color)' }}>Nexxus Job</h2>
+                <h2 style={{ color: 'var(--main-color)' }}>Nexxus Job </h2>
                 <p className={styles.p}>Navegación</p>
                 
                 <Button 
@@ -55,7 +92,7 @@ export default function DashboardStudent({ children }) {
 
                 <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'370px'}}>
                 <Button onClick={() => goToLogin()} className={styles.eliminarButton} text={'Cerrar Sesion'}/>
-                <Button className={styles.eliminarButton} text={'Eliminar Cuenta'}/>
+                <Button onClick={() => deleteCount(userId)} className={styles.eliminarButton} text={eliminando ? 'Eliminando...' : 'Eliminar Cuenta'} disabled={eliminando} />
                 </div>
 
             </Aside>

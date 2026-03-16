@@ -58,7 +58,7 @@ export default function StudenCuenta(){
             
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta actualizada con éxito!");
-                
+                console.log(response)
                
             }
         } catch (error) {
@@ -131,17 +131,22 @@ export default function StudenCuenta(){
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label htmlFor="carrera">Carrera</label>
-                    <select name="carrera_id" className={dashStyles.input}  required>
-                        <option defaultValue={alumno.alumno.carrera.id}>{alumno.alumno.carrera.nombre}</option>
-                        {carreras.map((carrera) => (
-
-                            <option key={carrera.id} value={carrera.id}>
-                                {carrera.nombre}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <label htmlFor="carrera">Carrera</label>
+                <select 
+                    name="carrera_id" 
+                    className={dashStyles.input} 
+                    required
+                  
+                    defaultValue={alumno.alumno.carrera_id} 
+                >
+                    <option value={alumno.alumno.carrera_id}>{alumno.alumno.carrera.nombre}</option>
+                    {carreras.map((carrera) => (
+                        <option key={carrera.id} value={carrera.id}>
+                            {carrera.nombre}
+                        </option>
+                    ))}
+                </select>
+            </div>
 
                 <Input name="tipo" type='hidden' value="alumno" />
 

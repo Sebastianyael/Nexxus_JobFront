@@ -52,7 +52,8 @@ export function LoginForm() {
                 alert("Redirgiendo al dashboard del instructor")
 
             }else if(tipo == "empresa"){
-                alert("Redirigirndo al dashboard de la empresa")
+                const empresaInfo = response.data;
+                navigate('/empresaDashboard' , {state: {empresa : empresaInfo}})
                 
             }
   
@@ -102,8 +103,9 @@ export function LoginForm() {
             <div  className={styles.register_link}>
                 <p>¿No tienes una cuenta?</p>
 
-                <Link style={{ color: 'var(--main-color)', textDecoration: 'none' }} title="Registrate Ahora" to="/registroAlumno">Registrate Ahora</Link>
+                <Link style={{ color: 'var(--main-color)', textDecoration: 'none' }} title="Registrate Ahora" to="/registroAlumno">Registrate como Alumno</Link>
             </div>
+                <Link style={{ color: 'var(--main-color)', textDecoration: 'none' }} title="Registrate Ahora" to="/registroEmpresa">Regsitarte como empresa</Link>
         </div>
         </>
     );
