@@ -16,6 +16,17 @@
     margin: 0 auto;
 }
 
+.eliminarButtonCrud{
+    width: auto;
+    height: auto;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+    max-height: 5vh;
+}
+
+
 .form{
     min-height: 30vh;
     display: flex;
@@ -67,4 +78,5 @@
         width: 49%; 
         padding: 0.5rem; 
         box-sizing: border-box;
+        
     }

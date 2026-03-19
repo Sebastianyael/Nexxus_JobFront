@@ -9,6 +9,12 @@ export default function RegistroAlumno() {
     const [carreras, setCarreras] = useState([]);
     const [enviando, setEnviando] = useState(false);
     const navigate = useNavigate()
+
+    const [archivo, setArchivo] = useState(null);
+
+
+
+    
     function goToLogin(){
         navigate('/')
     }
@@ -24,26 +30,34 @@ export default function RegistroAlumno() {
         obtenerCarreras();
     }, []);
 
-  
     const handleSubmit = async (e) => {
         e.preventDefault();
         setEnviando(true);
-
-
+    
+      
         const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData.entries());
+    
 
+        if (archivo) {
+            formData.set('curriculum', archivo); 
+        }
+    
         try {
-            const response = await api.post('/usuarios/alumnos', data);
+       
+            const response = await api.post('/usuarios/alumnos', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data',
+                },
+            });
             
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta creada con éxito!");
-                goToLogin()
-               
+                goToLogin();
             }
         } catch (error) {
-            console.error("Error al registrar:", error.response?.data || error.message);
-            alert("Hubo un error al crear la cuenta. Revisa los datos.");
+  
+            console.error("Errores de validación:", error.response?.data.error);
+            alert("Revisa los campos: " + JSON.stringify(error.response?.data.error));
         } finally {
             setEnviando(false);
         }
@@ -57,7 +71,7 @@ export default function RegistroAlumno() {
             </p>
             <br />
            
-            {/* Añadimos el onSubmit aquí */}
+      
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
                     <label htmlFor="nombre">Nombre</label>
@@ -109,8 +123,15 @@ export default function RegistroAlumno() {
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label htmlFor="curriculum">Curriculumn</label>
-                    <Input name="curriculum" type="text" required className={styles.input} />
+                    <label htmlFor="curriculum">Currículum (Solo PDF)</label>
+                    <input 
+                        name="curriculum" 
+                        type="file" 
+                        accept="application/pdf" 
+                        required 
+                        className={styles.input} 
+                        onChange={(e) => setArchivo(e.target.files[0])}
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
@@ -134,6 +155,9 @@ export default function RegistroAlumno() {
                     className={styles.button} 
                     disabled={enviando}
                 />
+                <Button text={'Cancelar'} className={styles.eliminarButtonCrud} onClick={() => goToLogin()}>
+        
+        </Button>
             </form>
         </div>
     );

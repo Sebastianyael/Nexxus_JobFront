@@ -17,12 +17,12 @@ export default function RegistroEmpresas() {
         e.preventDefault();
         setEnviando(true);
 
-        // Extraemos los datos del formulario automáticamente
+     
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
 
         try {
-            // Ajustamos la ruta a /empresas (la que definimos en el api.php)
+
             const response = await api.post('/empresas', data);
             
             if (response.status === 200 || response.status === 201) {
@@ -30,7 +30,7 @@ export default function RegistroEmpresas() {
                 goToLogin();
             }
         } catch (error) {
-            // Manejo de errores detallado
+      
             const mensajeError = error.response?.data?.mensaje || "Error al crear la cuenta";
             const detalles = error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join('\n') : "";
             
@@ -101,6 +101,10 @@ export default function RegistroEmpresas() {
                     className={styles.button} 
                     disabled={enviando}
                 />
+
+                <Button text={'Cancelar'} className={styles.eliminarButtonCrud} onClick={() => goToLogin()}>
+        
+                </Button>
             </form>
         </div>
     );

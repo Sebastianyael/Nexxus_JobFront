@@ -61,11 +61,27 @@ export default function StudentPostulaciones() {
                             <p>{item.vacante.descripcion}</p>
                            </div>
 
+                           <div style={{width : 'auto' , display:'flex' , gap:'30px' , padding:'5px' , placeContent : 'center' , fontSize : '14px'}}>
+                            <p>
+                                {item.vacante.genero}
+                            </p>
+
+                            <p>
+                                {item.vacante.modalidad}
+                            </p>
+
+                            <p>
+                                {item.vacante.tiempo}
+                            </p>
+                            </div>
+
                            
                            <div style={{display : 'flex' , alignItems: 'center' , justifyContent: 'space-around' , color: 'gray'}}>
                             <p style={{fontSize: '13px'}}>{item.estatus}</p>
                             <Button className={styles.button} onClick={() => eliminarPostulacion(item.id)}>Cancelar Postulacione</Button>
                            </div>
+
+                         
 
                            <div style={{display : 'flex' , justifyContent: 'space-around' , color: 'gray'}}>
                             <p>Aplicaste : {new Date(item.created_at).toLocaleDateString()}</p>

@@ -126,8 +126,27 @@ export default function StudenCuenta(){
                 </div>
 
                 <div className={styles.formGroup}>
-                    <label htmlFor="curriculum">Curriculumn</label>
-                    <Input  name="curriculum" type="text" required className={dashStyles.input} defaultValue={alumno.alumno.curriculum}/>
+                    <div style={{display:'flex' , gap:'10px' , width:'auto'}}>
+
+                    <label htmlFor="curriculum">Currículum (PDF)</label>
+                    
+                         {alumno.alumno.curriculum && (
+                             <a 
+                                 style={{ display: 'block', color: '#28a745' }}
+                                 href={`http://127.0.0.1:8000/storage/${alumno.alumno.curriculum}`} 
+                                 target="_blank" 
+                                 rel="noopener noreferrer"
+                             >
+                                 Ver archivo actual
+                             </a>
+                         )}
+                    </div>
+                    <input 
+                        name="curriculum" 
+                        type="file" 
+                        accept=".pdf" 
+                        className={dashStyles.input} 
+                    />
                 </div>
 
                 <div className={styles.formGroup}>

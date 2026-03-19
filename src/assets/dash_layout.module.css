@@ -9,6 +9,13 @@
     
 }
 
+.form{
+    width: 90%;
+    max-height: 60vh;
+    display: flex;
+    flex-wrap: wrap;
+}
+
 .p{
     color: var(--secondary-color);
     font-size: 13px;
@@ -25,7 +32,6 @@
     align-items: center;
     padding: 1rem;
     width: auto;
-    
 }
 
 .icon{
@@ -62,6 +68,8 @@
 
 .containerFiltro{
     display: flex;
+    max-width: 60%;
+    align-items: center;
     gap: 10px;
 }
 
@@ -69,15 +77,16 @@
     background-color: transparent;
     border: 1px solid rgb(132, 130, 130);
     color: var(--secondary-color);
-    height: 50px;
+    height: auto;
     border-radius: 20PX;
     display: flex;
-    padding: 1rem;
+    padding: 13px;
     
     max-width: 100px;
 }
 
 .vacantes_container{
+ 
     max-width: 100%;
     overflow: scroll;
     max-height: 66vh;
@@ -87,18 +96,19 @@
     gap: 20px;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+    
 }
 
 .vacante{
     background-color: var(--background-card);
     padding: 1rem;
-    width: 560px;
-    height: 300px;
+    width: 1000px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     border-radius: 15px;
    justify-content: space-evenly;
+   color: white;
 }
 
 .postulaciones_container{
@@ -157,6 +167,7 @@
         box-sizing: border-box;
         padding: 1rem;
         color: white;
+        width: 400px;
     }
 
     .input:focus{
@@ -188,13 +199,14 @@
     }
 
 .postulacionesForm{
-    width: 60%;
-    height: 30vh;
+    width: 100%;
+    min-height: 30vh;
     gap: 20px;
     padding: 1rem;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
 }
 
     .postulacionesForm input , textarea{
@@ -207,7 +219,56 @@
     }
 
 
+.editarButton{
+    width: 100px;
+    height: 50px;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: var(--main-color);
 
+}
+
+
+    .editarButton:hover{
+        cursor: pointer;
+    }
+
+.eliminarButtonCrud{
+    width: 100px;
+    height: auto;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: red;
+    color: white;
+}
+
+.vacantes_publicadas{
+    width: 100%;
+    padding: 1rem;
+
+    max-height: 61vh;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    
+}
+
+.formGroup {
+    display: flex;
+    gap: 15px;
+    flex-direction: column; 
+    width: 49%; 
+    padding: 0.5rem; 
+    box-sizing: border-box;
+}
+
+.filtroInput{
+    width: 100px;
+    padding: 10px;
+    background-color: var(--background-color);
+    color: var(--main-color);
+}
 
 ::-webkit-scrollbar {
     width: 8px;  
