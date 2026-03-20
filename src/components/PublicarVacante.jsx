@@ -1,80 +1,20 @@
 import styles from '../assets/dash_layout.module.css'
 import { Button } from './Button'
 import { Input } from './Input'
-import { useLocation, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useLocation,} from 'react-router-dom'
+import { useState } from 'react'
 import api from '../api/axios'
 
 export function PublicarVacante() {
-    const [vacantes, setVacantes] = useState([]);
-    const [editandoId, setEditandoId] = useState(null); 
-    const [datosEditados, setDatosEditados] = useState({}); 
+    
     const location = useLocation();
-    const navigate = useNavigate();
+
     const [enviando, setEnviando] = useState(false);
 
     const empresaId = location.state?.empresa?.empresaId || location.state?.empresaId;
 
-    const obtenerVacantes = async () => {
-        if (!empresaId) return;
-        try {
-            const response = await api.get(`/misVacantes/${empresaId}`);
-            setVacantes(response.data.vacantes || []);
-        } catch (error) {
-            console.error("Error al obtener vacantes:", error);
-        }
-    };
 
-    useEffect(() => {
-        obtenerVacantes();
-    }, [empresaId]);
-
-    
-    const iniciarEdicion = (vacante) => {
-        setEditandoId(vacante.id);
-        setDatosEditados({ ...vacante }); 
-    };
-
-
-    const handleEditChange = (e) => {
-        const { name, value } = e.target;
-        setDatosEditados(prev => ({ ...prev, [name]: value }));
-    };
-
-    const guardarCambios = async (id) => {
-        setEnviando(true);
-        try {
-            await api.put(`/vacantes/${id}`, datosEditados);
-            alert("Vacante actualizada con éxito");
-            setEditandoId(null); 
-            obtenerVacantes(); 
-        } catch (error) {
-            console.error("Error al actualizar:", error);
-            alert("No se pudo actualizar la vacante");
-        } finally {
-            setEnviando(false);
-        }
-    };
-
-    const eliminarVacante = async (id) => {
-
-        if (!window.confirm("¿Estás seguro de que deseas eliminar esta vacante? Esta acción no se puede deshacer.")) {
-            return;
-        }
-    
-        try {
-            const response = await api.delete(`/vacantes/${id}`);
-            
-            if (response.status === 200) {
-                alert("Vacante eliminada con éxito");
-                
-                setVacantes(vacantes.filter(vacante => vacante.id !== id));
-            }
-        } catch (error) {
-            console.error("Error al eliminar:", error);
-            alert("Hubo un error al intentar eliminar la vacante.");
-        }
-    };
+  
 
     const handleSubmitNueva = async (e) => {
         e.preventDefault();
@@ -94,7 +34,7 @@ export function PublicarVacante() {
             if (response.status === 201 || response.status === 200) {
                 alert("¡Vacante publicada!");
                 e.target.reset(); 
-                obtenerVacantes();
+                
             }
         } catch (error) {
             
@@ -108,6 +48,7 @@ export function PublicarVacante() {
     return (
         <>
             <h1>¡Publica una Vacante! </h1>
+            <br /><br /><br />
             <form className={styles.postulacionesForm} onSubmit={handleSubmitNueva}>
                 <div className={styles.formGroup}>
                     <label htmlFor="titulo">Titulo</label>
@@ -171,58 +112,10 @@ export function PublicarVacante() {
                     </select>
                 </div>
                 
-
+                
                 <Button text={enviando ? "Publicando..." : "Publicar Vacante"} type="submit" className={styles.buttonActive} disabled={enviando} />
             </form>
 
-
-            <br /><br />
-            <div className={styles.vacantes_publicadas}>
-                {vacantes.map((vacante) => (
-                    <div key={vacante.id} className={styles.vacante}>
-                        {editandoId === vacante.id ? (
-                            <>
-                                
-                                    
-                                <Input name="titulo" value={datosEditados.titulo} onChange={handleEditChange} className={styles.input} />
-                                
-                      
-                                <textarea name="descripcion" value={datosEditados.descripcion} onChange={handleEditChange} className={styles.input} />
-                                
-                                <textarea name="requisitos" value={datosEditados.requisitos} onChange={handleEditChange} className={styles.input} />
-                                
-                                <div style={{display:'flex', gap:'10px'}}>
-                                    <Button onClick={() => guardarCambios(vacante.id)} className={styles.editarButton}>
-                                        {enviando ? "Guardando..." : "Guardar"}
-                                    </Button>
-                                    <Button onClick={() => setEditandoId(null)} className={styles.eliminarButtonCrud}>
-                                        Cancelar
-                                    </Button>
-                                </div>
-                            </>
-                        ) : (
-                         
-                            <>
-                                <h3 style={{color: '#E87DD6'}}>{vacante.titulo}</h3>
-                                <p><strong>Descripción:</strong></p>
-                                <p style={{fontSize: '14px'}}>{vacante.descripcion}</p>
-                                <p><strong>Requisitos:</strong></p>
-                                <p style={{fontSize: '14px'}}>{vacante.requisitos}</p>
-                                
-                                <Button className={styles.editarButton} onClick={() => iniciarEdicion(vacante)}>
-                                    Editar
-                                </Button>
-                                <Button 
-                                    className={styles.eliminarButtonCrud} 
-                                    onClick={() => eliminarVacante(vacante.id)}
-                                >
-                                    Eliminar
-                                </Button>
-                            </>
-                        )}
-                    </div>
-                ))}
-            </div>
         </>
     );
 }

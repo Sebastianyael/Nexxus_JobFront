@@ -4,6 +4,7 @@ import DashboardStudent from "./pages/DashboardStudent"
 import RegistroAlumno from "./pages/RegistroAlumno"
 import RegistroEmpresas from "./components/RegistroEmpresas"
 import EmpresaDashboard from "./pages/EmpresaDashboard"
+import DetallesVacante from "./components/DetallesVacante"
 function App(){
   return (
     <Routes>
@@ -12,6 +13,7 @@ function App(){
       <Route path="/registroAlumno" element={<RegistroAlumno/>} />
       <Route path="/registroEmpresa" element={<RegistroEmpresas/>} />
       <Route path="/empresaDashboard" element={<EmpresaDashboard/>} />
+      <Route path="/detallesVacante" element={<DetallesVacante/>}></Route>
     </Routes>
   )
 }
