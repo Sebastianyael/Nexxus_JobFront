@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom"
 import { Aside } from "../components/Aside"
 import { PublicarVacante } from "../components/PublicarVacante"
 import Content from "../components/Content"
-import EmpresaPerfil from "../components/empresaPerfil"
+import EmpresaPerfil from '../components/EmpresaPerfil'
 
 import { Button } from "../components/Button"
 import styles from '../assets/dash_layout.module.css'
