@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+import api from '../api/axios';
 import { Input } from "./Input";
 import { Button } from "./Button";
 import styles from '../assets/dash_layout.module.css';
@@ -28,7 +28,7 @@ export default function EmpresaPerfil() {
             const fetchEmpresa = async () => {
                 try {
                     
-                    const response = await axios.get(`http://localhost:8000/api/empresas/${empresaId}`);
+                    const response = await api.get(`/empresas/${empresaId}`);
                     
                     
                     const info = response.data.empresas;
@@ -68,7 +68,7 @@ export default function EmpresaPerfil() {
     const handleUpdate = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.put(`http://localhost:8000/api/empresas/${empresaId}`, formData);
+            const response = await api.put(`/empresas/${empresaId}`, formData);
             
             if (response.status === 200) {
                 alert("Empresa actualizada correctamente");
