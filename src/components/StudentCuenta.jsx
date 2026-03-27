@@ -55,27 +55,24 @@ export default function StudenCuenta(){
         formData.append('_method', 'PUT');
     
         try {
-      
             const response = await api.post(`/usuarios/alumnos/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
             
+   
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta actualizada con éxito!");
                 
-               
-                if (response.data.alumno) {
-                    setAlumno(response.data);
-                } else {
-                    setAlumno({ alumno: response.data });
-                }
+              
+                setAlumno(response.data);
+                
+                console.log("Datos actualizados:", response.data);
             }
         } catch (error) {
-           
             console.error("Error al actualizar:", error.response?.data || error.message);
-            alert("Hubo un error al actualizar la cuenta. Revisa los datos.");
+            alert("Hubo un error al actualizar. Verifica que el archivo sea un PDF menor a 2MB.");
         } finally {
             setEnviando(false);
         }
