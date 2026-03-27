@@ -9,6 +9,12 @@
     
 }
 
+.button.active {
+    background-color: var(--main-color);
+    color: white;
+    font-weight: bold;
+}
+
 .form{
     width: 90%;
     max-height: 60vh;
