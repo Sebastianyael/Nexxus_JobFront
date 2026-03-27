@@ -74,23 +74,23 @@ export default function EmpresaDashboard({children}){
 
                 
                     <Button 
-                    onClick={() => cambiarTab('publicarVacante')} 
-                    className={`${styles.button} ${activeTab === 'publicarVacante' ? styles.active : ''}`} 
-                    text={"Publicar Vacantes"}/> 
+                            onClick={() => cambiarTab('publicarVacante')} 
+                          
+                            className={`${styles.button} ${activeTab === 'publicarVacante' ? styles.active : ''}`} 
+                            text={"Publicar Vacantes"}
+                        /> 
 
-                    <Button 
-                    onClick={() => cambiarTab('postulaciones')} 
-                    className={`${styles.button} ${activeTab === 'postulaciones' ? styles.active : ''}`} 
-                    text={"Postulaciones"}/> 
+                        <Button 
+                            onClick={() => cambiarTab('postulaciones')} 
+                            className={`${styles.button} ${activeTab === 'postulaciones' ? styles.active : ''}`} 
+                            text={"Postulaciones"}
+                        /> 
 
-     
-
-
-                    <p className={styles.p}>Cuenta</p>
-                    <Button 
-                    onClick={() => cambiarTab('perfil')} 
-                    className={`${styles.button} ${activeTab === 'perfil' ? styles.active : ''}`} 
-                    text={"Perfil"}/> 
+                        <Button 
+                            onClick={() => cambiarTab('perfil')} 
+                            className={`${styles.button} ${activeTab === 'perfil' ? styles.active : ''}`} 
+                            text={"Perfil"}
+                        />
 
                 <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'370px'}}>
                 <Button onClick={() => goToLogin()} className={styles.eliminarButton} text={'Cerrar Sesion'}/>
