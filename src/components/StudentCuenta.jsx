@@ -45,33 +45,41 @@ export default function StudenCuenta(){
     }, []);
 
   
-    const handleSubmit = async (e , id) => {
+    const handleSubmit = async (e, id) => {
         e.preventDefault();
         setEnviando(true);
-
-
+    
         const formData = new FormData(e.currentTarget);
-        const data = Object.fromEntries(formData.entries());
-
+        
+     
+        formData.append('_method', 'PUT');
+    
         try {
-            const response = await api.put(`/usuarios/alumnos/${id}`, data);
+      
+            const response = await api.post(`/usuarios/alumnos/${id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
             
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta actualizada con éxito!");
-                console.log(response)
+                
                
+                if (response.data.alumno) {
+                    setAlumno(response.data);
+                } else {
+                    setAlumno({ alumno: response.data });
+                }
             }
         } catch (error) {
-            console.error("Error al registrar:", error.response?.data || error.message);
+           
+            console.error("Error al actualizar:", error.response?.data || error.message);
             alert("Hubo un error al actualizar la cuenta. Revisa los datos.");
         } finally {
             setEnviando(false);
         }
     };
-
-    if (!alumno) {
-        return <div className={dashStyles.loading}>Cargando datos del perfil...</div>;
-    }
     return(
         <>
             <h1>Mi cuenta </h1>
