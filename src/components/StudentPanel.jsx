@@ -6,7 +6,7 @@ import { useLocation } from 'react-router-dom';
 
 export default function StudentPerfil({children}){
     const [vacantes, setVacantes] = useState([]);
-    // 1. Estado para los filtros (nombres en español como tu BD)
+
     const [filtros, setFiltros] = useState({
         genero: '',
         tiempo: '',
@@ -17,7 +17,7 @@ export default function StudentPerfil({children}){
     const location = useLocation()
     const alumnoId = location.state?.user.alumnoId;
 
-    // Manejar cambios en los selects
+
     const handleChange = (e) => {
         setFiltros({
             ...filtros,
@@ -27,21 +27,20 @@ export default function StudentPerfil({children}){
 
     const obtenerVacantes = async (params = {}) => {
         try {
-            // Llamamos a la ruta de filtrar específicamente
+          
             const response = await api.get('/vacantes/filtrar', { params }); 
             
-            // Laravel ahora devuelve { vacantes: [...] }
             setVacantes(response.data.vacantes || []);
         } catch (error) {
             console.error("Error al obtener vacantes:", error);
         }
     };
-    // Carga inicial
+
     useEffect(() => {
         obtenerVacantes();
     }, []);
 
-    // 2. Función para el botón "Filtrar"
+
     const ejecutarFiltro = (e) => {
         e.preventDefault();
         obtenerVacantes(filtros);

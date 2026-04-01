@@ -14,7 +14,7 @@ export default function StudenCuenta() {
     const location = useLocation();
     const userId = location.state?.user?.alumnoId;
 
-    // Función para obtener la info (la sacamos para poder reutilizarla)
+
     const obtenerInformacion = useCallback(async () => {
         if (!userId) return;
         try {
@@ -45,14 +45,13 @@ export default function StudenCuenta() {
         e.preventDefault();
         setEnviando(true);
 
-        // Usamos FormData para que el archivo PDF viaje íntegro
+
         const formData = new FormData(e.currentTarget);
-        
-        // TRUCO: Laravel requiere _method PUT para procesar archivos en actualizaciones
+   
         formData.append('_method', 'PUT');
 
         try {
-            // Enviamos por POST pero con el _method PUT arriba
+     
             const response = await api.post(`/usuarios/alumnos/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -62,8 +61,7 @@ export default function StudenCuenta() {
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta actualizada con éxito!");
                 
-                // EN LUGAR DE setAlumno(response.data), refrescamos los datos desde el servidor
-                // Esto evita que la estructura del JSON cambie y rompa el renderizado
+      
                 await obtenerInformacion();
             }
         } catch (error) {

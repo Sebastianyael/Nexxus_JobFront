@@ -49,7 +49,9 @@ export function LoginForm() {
                 navigate('/DashboardStudent' , {state: {user : usuarioInfo}})
 
             }else if(tipo == "Instructor"){
-                alert("Redirgiendo al dashboard del instructor")
+                const maestroInfo = response.data;
+
+                navigate('/maestro' , {state: {maestro : maestroInfo}})
 
             }else if(tipo == "empresa"){
                 const empresaInfo = response.data;

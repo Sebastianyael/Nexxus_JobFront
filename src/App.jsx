@@ -5,6 +5,8 @@ import RegistroAlumno from "./pages/RegistroAlumno"
 import RegistroEmpresas from "./components/RegistroEmpresas"
 import EmpresaDashboard from "./pages/EmpresaDashboard"
 import DetallesVacante from "./components/DetallesVacante"
+import DashboardMestro from "./pages/DashboardMaestro"
+
 function App(){
   return (
     <Routes>
@@ -14,6 +16,7 @@ function App(){
       <Route path="/registroEmpresa" element={<RegistroEmpresas/>} />
       <Route path="/empresaDashboard" element={<EmpresaDashboard/>} />
       <Route path="/detallesVacante" element={<DetallesVacante/>}></Route>
+      <Route path="/maestro" element={<DashboardMestro/>}></Route>
     </Routes>
   )
 }
