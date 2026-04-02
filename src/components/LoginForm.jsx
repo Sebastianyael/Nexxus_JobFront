@@ -61,7 +61,7 @@ export function LoginForm() {
   
         } catch (error) {
             console.error("Error en el login:", error);
-            alert("Credenciales incorrectas");
+            alert("Usuario no encontrado");
         }
     };
     

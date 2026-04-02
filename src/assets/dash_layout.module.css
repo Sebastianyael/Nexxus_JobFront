@@ -181,6 +181,24 @@
         color: var(--main-color);
     }
 
+    .input_dos{
+        font-size: 17px;
+        height: 50px;
+        border-radius: 10px;
+        outline: none;
+        background-color: var(--background-color);
+        border: none;
+        box-sizing: border-box;
+        padding: 1rem;
+        color: white;
+        width: 400px;
+    }
+    
+    .input_dos:focus{
+        border:1px solid var(--main-color);
+        color: var(--main-color);
+    }
+
 .eliminarButton{
     transition: 0.3s ease all;
     color: red;

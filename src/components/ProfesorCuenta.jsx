@@ -15,7 +15,7 @@ export default function ProfesorCuenta() {
     const [cargando, setCargando] = useState(true)
 
   
-    const idUsuarioInicial = location.state?.maestro?.instructor?.id_usuario || 67
+    const idUsuarioInicial = location.state?.maestro?.instructor?.id_usuario 
 
     useEffect(() => {
         const fetchData = async () => {
