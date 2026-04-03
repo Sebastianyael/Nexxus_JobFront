@@ -75,7 +75,7 @@ export default function  DashboardMestro(){
                     className={`${styles.button} ${activeTab === 'perfil' ? styles.active : ''}`} 
                     text={"Mis Datos"} 
                 />
-                 <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'370px'}}>
+                 <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'470px'}}>
                 <Button onClick={() => goToLogin()} className={styles.eliminarButton} text={'Cerrar Sesion'}/>
                 <Button onClick={() => deleteCount(maestroInfo.usuarioId)} className={styles.eliminarButton} text={eliminando ? 'Eliminando...' : 'Eliminar Cuenta'} disabled={eliminando} />
                 </div>

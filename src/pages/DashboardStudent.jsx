@@ -9,6 +9,8 @@ import StudenCuenta from "../components/StudentCuenta";
 import {  useNavigate } from "react-router-dom";
 import api from "../api/axios";
 import { useLocation } from "react-router-dom";
+import MisRecomendaciones from "../components/MisRecomendaciones";
+
 
 export default function DashboardStudent({ children }) {
     const [activeTab, setActiveTab] = useState(localStorage.getItem('lastSection') || 'panelPrincipal');
@@ -63,7 +65,8 @@ export default function DashboardStudent({ children }) {
     const components = {
         perfil: <StudenCuenta/>,
         postulaciones: <StudentPostulaciones />,
-        panelPrincipal: <StudentPanel />
+        panelPrincipal: <StudentPanel />,
+        recomendaciones : <MisRecomendaciones/>
     };
 
     return (
@@ -90,7 +93,14 @@ export default function DashboardStudent({ children }) {
                     text={"Mi cuenta"} 
                 />
 
-                <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'370px'}}>
+                <Button 
+                    onClick={() => cambiarTab('recomendaciones')} 
+                    className={`${styles.button} ${activeTab === 'recomendaciones' ? styles.active : ''}`} 
+                    text={"Mis recomendaciones"} 
+                />
+
+
+                <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'320px'}}>
                 <Button onClick={() => goToLogin()} className={styles.eliminarButton} text={'Cerrar Sesion'}/>
                 <Button onClick={() => deleteCount(userId)} className={styles.eliminarButton} text={eliminando ? 'Eliminando...' : 'Eliminar Cuenta'} disabled={eliminando} />
                 </div>
