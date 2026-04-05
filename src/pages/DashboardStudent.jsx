@@ -78,7 +78,7 @@ export default function DashboardStudent({ children }) {
                 <Button 
                     onClick={() => cambiarTab('panelPrincipal')} 
                     className={`${styles.button} ${activeTab === 'panelPrincipal' ? styles.active : ''}`} 
-                    text={"Panel General"} 
+                    text={"Vacantes Disponibles"} 
                 />
                 <Button 
                     onClick={() => cambiarTab('postulaciones')} 

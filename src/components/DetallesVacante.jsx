@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
-import { Button } from './Button';
+
 import { Input } from './Input';
 import styles from '../assets/dash_layout.module.css'
 

@@ -9,29 +9,33 @@ import api from "../api/axios"
 export default function ProfesorCuenta() {
     const location = useLocation()
     
-   
     const [maestro, setMaestro] = useState(null)
     const [puestos, setPuestos] = useState([])
     const [cargando, setCargando] = useState(true)
 
-  
+    // NUEVOS ESTADOS PARA VALIDACIÓN
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorPass, setErrorPass] = useState("");
+
     const idUsuarioInicial = location.state?.maestro?.instructor?.id_usuario 
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-
                 const resPuestos = await api.get('/puestos')
                 if (Array.isArray(resPuestos.data)) {
                     setPuestos(resPuestos.data)
                 }
 
-         
                 const resMaestro = await api.get(`/usuarios/instructores/${idUsuarioInicial}`)
                 
-             
                 if (resMaestro.data && resMaestro.data.instructores) {
-                    setMaestro(resMaestro.data.instructores)
+                    const data = resMaestro.data.instructores;
+                    setMaestro(data)
+                    // Inicializamos los estados de contraseña con el valor actual
+                    setPassword(data.usuarios?.contraseña || "")
+                    setConfirmPassword(data.usuarios?.contraseña || "")
                 }
             } catch (error) {
                 console.error("Error al sincronizar datos:", error)
@@ -45,6 +49,18 @@ export default function ProfesorCuenta() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setErrorPass("")
+
+        // VALIDACIÓN DE SEGURIDAD
+        if (password.length < 8) {
+            setErrorPass("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            setErrorPass("Las contraseñas no coinciden.");
+            return;
+        }
+
         const formData = new FormData(e.target)
         
         const dataToSend = {
@@ -53,7 +69,7 @@ export default function ProfesorCuenta() {
             apellido_m: formData.get("apellido_m"),
             email: formData.get("email"),
             telefono: formData.get("telefono"),
-            contraseña: formData.get("contraseña"),
+            contraseña: password, // Usamos el estado validado
             fecha_nacimiento: formData.get("fecha_nacimiento"),
             genero: formData.get("genero"),
             tipo: "Instructor", 
@@ -64,7 +80,6 @@ export default function ProfesorCuenta() {
         try {
             await api.put(`/usuarios/instructores/${maestro.id_usuario}`, dataToSend)
             alert("¡Datos actualizados correctamente!")
-            
             
             const refresh = await api.get(`/usuarios/instructores/${maestro.id_usuario}`)
             setMaestro(refresh.data.instructores)
@@ -131,23 +146,59 @@ export default function ProfesorCuenta() {
                     <label>Teléfono</label>
                     <Input 
                         name="telefono" 
-                        type="text" 
+                        type="number" 
                         required 
                         className={dashStyles.input} 
                         defaultValue={maestro.usuarios?.telefono} 
+                        onKeyDown={(e) => {
+                            if (["-", "e", "+", "."].includes(e.key)) e.preventDefault();
+                        }}
+                        onInput={(e) => {
+                            if (e.target.value.length > 10) e.target.value = e.target.value.slice(0, 10);
+                            if (e.target.value < 0) e.target.value = "";
+                        }} 
                     />
                 </div>
 
+                {/* CAMPO CONTRASEÑA CON VALIDACIÓN VISUAL */}
                 <div className={styles.formGroup}>
-                    <label>Contraseña</label>
+                    <label>
+                        Contraseña
+                        {password.length > 0 && password.length < 8 && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>(Mínimo 8)</span>
+                        )}
+                    </label>
                     <Input 
                         name="contraseña" 
                         type="password" 
                         required 
                         className={dashStyles.input} 
-                        defaultValue={maestro.usuarios?.contraseña} 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
+
+                {/* CAMPO CONFIRMAR CONTRASEÑA */}
+                <div className={styles.formGroup}>
+                    <label>
+                        Confirmar Contraseña
+                        {confirmPassword.length > 0 && password !== confirmPassword && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>(No coinciden)</span>
+                        )}
+                    </label>
+                    <Input 
+                        name="confirmar_contraseña" 
+                        type="password" 
+                        required 
+                        className={dashStyles.input} 
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
+
+                {errorPass && (
+                    <p style={{ color: '#ff4d4d', fontSize: '13px', textAlign: 'center', gridColumn: '1 / -1' }}>{errorPass}</p>
+                )}
 
                 <div className={styles.formGroup}>
                     <label>Fecha de Nacimiento</label>

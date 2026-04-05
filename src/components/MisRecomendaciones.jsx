@@ -58,7 +58,7 @@ export default function MisRecomendaciones() {
                         </div>
                     ))
                 ) : (
-                    <p style={{ color: 'white' }}>No hay recomendaciones disponibles o cargando...</p>
+                    <p style={{ color: 'white' }}>No hay recomendaciones disponibles ...</p>
                 )}
             </div>
         </>

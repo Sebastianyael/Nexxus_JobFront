@@ -9,20 +9,35 @@ export default function RegistroEmpresas() {
     const [enviando, setEnviando] = useState(false);
     const navigate = useNavigate();
 
+    // NUEVOS ESTADOS PARA VALIDACIÓN
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorPass, setErrorPass] = useState("");
+
     const goToLogin = () => {
         navigate('/');
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorPass("");
+
+        // VALIDACIÓN DE CONTRASEÑA ANTES DE ENVIAR
+        if (password.length < 8) {
+            setErrorPass("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            setErrorPass("Las contraseñas no coinciden.");
+            return;
+        }
+
         setEnviando(true);
 
-     
         const formData = new FormData(e.target);
         const data = Object.fromEntries(formData.entries());
 
         try {
-
             const response = await api.post('/empresas', data);
             
             if (response.status === 200 || response.status === 201) {
@@ -30,7 +45,6 @@ export default function RegistroEmpresas() {
                 goToLogin();
             }
         } catch (error) {
-      
             const mensajeError = error.response?.data?.mensaje || "Error al crear la cuenta";
             const detalles = error.response?.data?.errors ? Object.values(error.response.data.errors).flat().join('\n') : "";
             
@@ -58,7 +72,15 @@ export default function RegistroEmpresas() {
 
                 <div className={styles.formGroup}>
                     <label>Teléfono</label>
-                    <Input name="telefono" type="text" required className={styles.input} />
+                    <Input name="telefono" type="number" required className={styles.input}
+                         onKeyDown={(e) => {
+                             if (["-", "e", "+", "."].includes(e.key)) e.preventDefault();
+                         }}
+                         onInput={(e) => {
+                             if (e.target.value.length > 10) e.target.value = e.target.value.slice(0, 10);
+                             if (e.target.value < 0) e.target.value = "";
+                         }} 
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
@@ -66,13 +88,46 @@ export default function RegistroEmpresas() {
                     <Input name="email" type="email" required className={styles.input} />
                 </div>
 
+                {/* CONTRASEÑA CON AVISO EN EL LABEL */}
                 <div className={styles.formGroup}>
-                    <label>Contraseña</label>
-                    <Input name="contraseña" type="password" required className={styles.input} />
+                    <label>
+                        Contraseña 
+                        {password.length > 0 && password.length < 8 && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>(Mínimo 8)</span>
+                        )}
+                    </label>
+                    <Input 
+                        name="contraseña" 
+                        type="password" 
+                        required 
+                        className={styles.input}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </div>
 
+                {/* CONFIRMAR CONTRASEÑA CON AVISO EN EL LABEL */}
+                <div className={styles.formGroup}>
+                    <label>
+                        Confirmar Contraseña
+                        {confirmPassword.length > 0 && password !== confirmPassword && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>(No coincide)</span>
+                        )}
+                    </label>
+                    <Input 
+                        name="confirmar_contraseña" 
+                        type="password" 
+                        required 
+                        className={styles.input}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
 
-            
+                {/* ERROR GENERAL DE CONTRASEÑA */}
+                {errorPass && (
+                    <p style={{ color: '#ff4d4d', fontSize: '13px', textAlign: 'center', gridColumn: '1 / -1' }}>{errorPass}</p>
+                )}
 
                 <div className={styles.formGroup}>
                     <label>Calle</label>
@@ -102,9 +157,12 @@ export default function RegistroEmpresas() {
                     disabled={enviando}
                 />
 
-                <Button text={'Cancelar'} className={styles.eliminarButtonCrud} onClick={() => goToLogin()}>
-        
-                </Button>
+                <Button 
+                    text={'Cancelar'} 
+                    type="button"
+                    className={styles.eliminarButtonCrud} 
+                    onClick={goToLogin}
+                />
             </form>
         </div>
     );

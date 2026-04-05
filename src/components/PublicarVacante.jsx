@@ -1,20 +1,17 @@
 import styles from '../assets/dash_layout.module.css'
 import { Button } from './Button'
 import { Input } from './Input'
-import { useLocation,} from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import api from '../api/axios'
 
 export function PublicarVacante() {
-    
     const location = useLocation();
-
     const [enviando, setEnviando] = useState(false);
-
     const empresaId = location.state?.empresa?.empresaId || location.state?.empresaId;
 
-
   
+    const hoy = new Date().toISOString().split('T')[0];
 
     const handleSubmitNueva = async (e) => {
         e.preventDefault();
@@ -22,7 +19,6 @@ export function PublicarVacante() {
     
         const formData = new FormData(e.currentTarget); 
         const data = Object.fromEntries(formData.entries());
-        
         
         const payload = {
             ...data,
@@ -34,10 +30,8 @@ export function PublicarVacante() {
             if (response.status === 201 || response.status === 200) {
                 alert("¡Vacante publicada!");
                 e.target.reset(); 
-                
             }
         } catch (error) {
-            
             const mensajeError = error.response?.data?.mensaje || "Error al publicar";
             alert(mensajeError);
         } finally {
@@ -56,8 +50,17 @@ export function PublicarVacante() {
                 </div>
                 
                 <div className={styles.formGroup}>
-                    <label htmlFor="fecha_de_expiracion">Fecha de Expiracion</label>
-                    <Input name="fecha_de_expiracion" type='date' required className={styles.input} />
+                    <label htmlFor="fecha_de_expiracion">
+                        Fecha de Expiracion 
+                        <span style={{ fontSize: '11px', color: '#666', marginLeft: '8px' }}>(Debe ser posterior al dia de hoy)</span>
+                    </label>
+                    <Input 
+                        name="fecha_de_expiracion" 
+                        type='date' 
+                        required 
+                        className={styles.input} 
+                        min={hoy}
+                    />
                 </div>
 
                 <div className={styles.formGroup}>
@@ -100,7 +103,6 @@ export function PublicarVacante() {
                     </select>
                 </div>
 
-                
                 <div className={styles.formGroup}>
                     <label htmlFor="modalidad" >Modalidad</label>
                     <select name="modalidad" className={styles.input} id="modalidad" required>
@@ -108,14 +110,11 @@ export function PublicarVacante() {
                         <option value="Presencial">Presencial</option>
                         <option value="Remoto">Remoto </option>
                         <option value="Hibrido">Hibrido</option>
-
                     </select>
                 </div>
                 
-                
                 <Button text={enviando ? "Publicando..." : "Publicar Vacante"} type="submit" className={styles.buttonActive} disabled={enviando} />
             </form>
-
         </>
     );
 }

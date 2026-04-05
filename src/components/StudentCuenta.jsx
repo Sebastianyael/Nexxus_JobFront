@@ -11,15 +11,22 @@ export default function StudenCuenta() {
     const [alumno, setAlumno] = useState(null);
     const [enviando, setEnviando] = useState(false);
 
+    // NUEVOS ESTADOS PARA VALIDACIÓN DE CONTRASEÑA
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorPass, setErrorPass] = useState("");
+
     const location = useLocation();
     const userId = location.state?.user?.alumnoId;
-
 
     const obtenerInformacion = useCallback(async () => {
         if (!userId) return;
         try {
             const response = await api.get(`/usuarios/alumnos/${userId}`);
             setAlumno(response.data);
+            // Inicializamos el estado de la contraseña con el valor actual
+            setPassword(response.data.alumno.usuario.contraseña || "");
+            setConfirmPassword(response.data.alumno.usuario.contraseña || "");
         } catch (error) {
             console.error("Error al obtener la info:", error);
         }
@@ -43,15 +50,23 @@ export default function StudenCuenta() {
 
     const handleSubmit = async (e, id) => {
         e.preventDefault();
+        setErrorPass("");
+
+        // BLOQUEO DE ENVÍO SI NO CUMPLE REQUISITOS
+        if (password.length < 8) {
+            setErrorPass("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            setErrorPass("Las contraseñas no coinciden.");
+            return;
+        }
+
         setEnviando(true);
-
-
         const formData = new FormData(e.currentTarget);
-   
         formData.append('_method', 'PUT');
 
         try {
-     
             const response = await api.post(`/usuarios/alumnos/${id}`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
@@ -60,8 +75,6 @@ export default function StudenCuenta() {
 
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta actualizada con éxito!");
-                
-      
                 await obtenerInformacion();
             }
         } catch (error) {
@@ -103,13 +116,58 @@ export default function StudenCuenta() {
 
                 <div className={styles.formGroup}>
                     <label htmlFor="telefono">Teléfono</label>
-                    <Input name="telefono" type="number" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.telefono} />
+                    <Input name="telefono" type="number" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.telefono}
+                        min={0}
+                        max={9999999999}
+                        onKeyDown={(e) => {
+                            if (["-", "e", "+", "."].includes(e.key)) e.preventDefault();
+                        }}
+                        onInput={(e) => {
+                            if (e.target.value.length > 10) e.target.value = e.target.value.slice(0, 10);
+                            if (e.target.value < 0) e.target.value = "";
+                        }} 
+                    />
                 </div>
 
+                {/* --- CAMPO CONTRASEÑA ACTUALIZADO --- */}
                 <div className={styles.formGroup}>
-                    <label htmlFor="contraseña">Contraseña</label>
-                    <Input name="contraseña" type="password" required className={dashStyles.input} defaultValue={alumno.alumno.usuario.contraseña} />
+                    <label htmlFor="contraseña">
+                        Contraseña
+                        {password.length > 0 && password.length < 8 && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>(Mínimo 8 caracteres)</span>
+                        )}
+                    </label>
+                    <Input 
+                        name="contraseña" 
+                        type="password" 
+                        required 
+                        className={dashStyles.input} 
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </div>
+
+                {/* --- CAMPO CONFIRMAR CONTRASEÑA AÑADIDO --- */}
+                <div className={styles.formGroup}>
+                    <label htmlFor="confirmar_contraseña">
+                        Confirmar Contraseña
+                        {confirmPassword.length > 0 && password !== confirmPassword && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>(No coinciden)</span>
+                        )}
+                    </label>
+                    <Input 
+                        name="confirmar_contraseña" 
+                        type="password" 
+                        required 
+                        className={dashStyles.input} 
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
+
+                {errorPass && (
+                    <p style={{ color: '#ff4d4d', fontSize: '13px', textAlign: 'center', gridColumn: '1 / -1' }}>{errorPass}</p>
+                )}
 
                 <div className={styles.formGroup}>
                     <label htmlFor="fecha_nacimiento">Fecha de Nacimiento</label>

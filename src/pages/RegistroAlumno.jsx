@@ -8,16 +8,19 @@ import { useNavigate } from 'react-router-dom'
 export default function RegistroAlumno() {
     const [carreras, setCarreras] = useState([]);
     const [enviando, setEnviando] = useState(false);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
     const [archivo, setArchivo] = useState(null);
-
-
-
     
-    function goToLogin(){
+   
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [errorGeneral, setErrorGeneral] = useState("");
+
+    function goToLogin() {
         navigate('/')
     }
+
     useEffect(() => {
         const obtenerCarreras = async () => {
             try {
@@ -32,30 +35,37 @@ export default function RegistroAlumno() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setErrorGeneral("");
+
+       
+        if (password.length < 8) {
+            setErrorGeneral("La contraseña debe tener al menos 8 caracteres.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            setErrorGeneral("Las contraseñas no coinciden.");
+            return;
+        }
+
         setEnviando(true);
-    
-      
         const formData = new FormData(e.target);
-    
 
         if (archivo) {
-            formData.set('curriculum', archivo); 
+            formData.set('curriculum', archivo);
         }
-    
+
         try {
-       
             const response = await api.post('/usuarios/alumnos', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },
             });
-            
+
             if (response.status === 200 || response.status === 201) {
                 alert("¡Cuenta creada con éxito!");
                 goToLogin();
             }
         } catch (error) {
-  
             console.error("Errores de validación:", error.response?.data.error);
             alert("Revisa los campos: " + JSON.stringify(error.response?.data.error));
         } finally {
@@ -67,11 +77,10 @@ export default function RegistroAlumno() {
         <div className={styles.register_container}>
             <h1>Crea tu Cuenta</h1>
             <p style={{ color: '#BDC1CA', fontSize: '14px' }}>
-               Encuentra tu próxima oportunidad laboral
+                Encuentra tu próxima oportunidad laboral
             </p>
             <br />
-           
-      
+
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.formGroup}>
                     <label htmlFor="nombre">Nombre</label>
@@ -95,13 +104,70 @@ export default function RegistroAlumno() {
 
                 <div className={styles.formGroup}>
                     <label htmlFor="telefono">Teléfono</label>
-                    <Input name="telefono" placeholder="222 333 4455" type="number" required className={styles.input} />
+                    <Input 
+                        name="telefono" 
+                        placeholder="222 333 4455" 
+                        type="number" 
+                        required 
+                        className={styles.input} 
+                        onKeyDown={(e) => {
+                            if (["-", "e", "+", "."].includes(e.key)) e.preventDefault();
+                        }}
+                        onInput={(e) => {
+                            if (e.target.value.length > 10) e.target.value = e.target.value.slice(0, 10);
+                            if (e.target.value < 0) e.target.value = "";
+                        }} 
+                    />
                 </div>
 
+           
                 <div className={styles.formGroup}>
-                    <label htmlFor="contraseña">Contraseña</label>
-                    <Input name="contraseña" placeholder="***********" type="password" required className={styles.input} />
+                    <label htmlFor="contraseña">
+                        Contraseña 
+                        {password.length > 0 && password.length < 8 && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>
+                                (Mínimo 8 caracteres)
+                            </span>
+                        )}
+                    </label>
+                    <Input 
+                        name="contraseña" 
+                        placeholder="***********" 
+                        type="password" 
+                        required 
+                        className={styles.input}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
                 </div>
+
+            
+                <div className={styles.formGroup}>
+                    <label htmlFor="confirmar_contraseña">
+                        Confirmar Contraseña
+                        {confirmPassword.length > 0 && password !== confirmPassword && (
+                            <span style={{ color: '#ff4d4d', fontSize: '12px', marginLeft: '10px' }}>
+                                (No coinciden)
+                            </span>
+                        )}
+                    </label>
+                    <Input 
+                        name="confirmar_contraseña" 
+                        placeholder="***********" 
+                        type="password" 
+                        required 
+                        className={styles.input}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                </div>
+
+               
+                {errorGeneral && (
+                    <p style={{ color: '#ff4d4d', fontSize: '14px', fontWeight: 'bold', textAlign: 'center' }}>
+                        {errorGeneral}
+                    </p>
+                )}
 
                 <div className={styles.formGroup}>
                     <label htmlFor="fecha_nacimiento">Fecha de Nacimiento</label>
@@ -155,9 +221,13 @@ export default function RegistroAlumno() {
                     className={styles.button} 
                     disabled={enviando}
                 />
-                <Button text={'Cancelar'} className={styles.eliminarButtonCrud} onClick={() => goToLogin()}>
-        
-        </Button>
+                
+                <Button 
+                    text={'Cancelar'} 
+                    type="button"
+                    className={styles.eliminarButtonCrud} 
+                    onClick={goToLogin} 
+                />
             </form>
         </div>
     );

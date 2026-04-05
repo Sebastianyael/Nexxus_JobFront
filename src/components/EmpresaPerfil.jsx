@@ -109,7 +109,13 @@ export default function EmpresaPerfil() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     <label htmlFor="telefono">Telefono</label>
-                    <Input name="telefono" value={formData.telefono} onChange={handleChange} className={styles.input} />
+                    <Input type='number' name="telefono" value={formData.telefono} onChange={handleChange} className={styles.input} onKeyDown={(e) => {
+                            if (["-", "e", "+", "."].includes(e.key)) e.preventDefault();
+                        }}
+                        onInput={(e) => {
+                            if (e.target.value.length > 10) e.target.value = e.target.value.slice(0, 10);
+                            if (e.target.value < 0) e.target.value = "";
+                        }} />
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
