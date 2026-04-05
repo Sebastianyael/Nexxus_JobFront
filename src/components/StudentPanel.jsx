@@ -54,7 +54,7 @@ export default function StudentPerfil({children}){
                 estatus : 'pendiente'
             })
             if (response.status === 200 || response.status === 201) {
-                alert("¡Postulación enviada con éxito!");
+                alert(response.data.mensaje);
             }
         }catch(error){
             console.error('Error en la postulacion' , error)
