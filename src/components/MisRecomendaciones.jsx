@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
 import api from "../api/axios"
+import { TrophyIcon } from "@heroicons/react/16/solid"
 
 export default function MisRecomendaciones() {
     const location = useLocation()
@@ -50,11 +51,17 @@ export default function MisRecomendaciones() {
                             color: 'white',
                             gap : '15px',
                             display : 'flex',
-                            flexDirection : 'column'
+                            alignItems : 'center'
+                            
                         }}>
-                           
-                            <p><strong>Instructor :</strong> {reco.instructor_info.usuarios.nombre} {reco.instructor_info.usuarios.apellido_p} {reco.instructor_info.usuarios.apellido_m}</p>
-                            <p><strong>Comentario:</strong> {reco.comentario}</p>
+                            <div style={{width : '35px' , height : '35px' , display : 'flex' , justifyContent : 'center' , alignItems : 'center' }}>
+                                <TrophyIcon style={{color : '#FFD700'}}></TrophyIcon>
+                            </div>
+
+                            <div style={{display : 'flex' , flexDirection : 'column' , gap : '10px'}}>
+                                <p><strong>Instructor :</strong> {reco.instructor_info.usuarios.nombre} {reco.instructor_info.usuarios.apellido_p} {reco.instructor_info.usuarios.apellido_m}</p>
+                                <p><strong>Comentario:</strong> {reco.comentario}</p>
+                            </div>
                         </div>
                     ))
                 ) : (

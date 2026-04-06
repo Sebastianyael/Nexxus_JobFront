@@ -132,7 +132,7 @@ export default function StudentPostulaciones() {
                         </div>
                     ))
                 ) : (
-                    <p style={{ color: 'gray', textAlign: 'center' }}>No tienes postulaciones en estado: {filtro}.</p>
+                    <p style={{ color: 'gray', textAlign: 'center' }}>No tienes postulaciones {filtro}.</p>
                 )}
             </div>
         </>

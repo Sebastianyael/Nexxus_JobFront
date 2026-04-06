@@ -270,7 +270,7 @@
     width: 100%;
     padding: 1rem;
 
-    max-height: 61vh;
+    max-height: 94vh;
     overflow: scroll;
     display: flex;
     flex-wrap: wrap;
@@ -298,7 +298,7 @@
 .vacanteEmpresa{
     background-color: var(--background-card);
     padding: 1rem;
-    width: 380px;
+    width: 360px;
     height: 300px;
     display: flex;
     flex-direction: column;

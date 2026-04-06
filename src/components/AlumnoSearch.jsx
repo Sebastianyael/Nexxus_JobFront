@@ -132,7 +132,7 @@ export default function AlumnoSearch() {
                         value={matricula}
                         onChange={(e) => setMatricula(e.target.value)}
                     />
-                    <Button onClick={buscarAlumno} disabled={loading}>
+                    <Button className={styles.button} onClick={buscarAlumno} disabled={loading}>
                         {loading ? 'Buscando...' : 'Buscar'}
                     </Button>
                 </div>

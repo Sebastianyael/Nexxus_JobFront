@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import api from '../api/axios';
-
+import { TrophyIcon } from '@heroicons/react/16/solid';
 import { Input } from './Input';
 import styles from '../assets/dash_layout.module.css'
 
@@ -190,22 +190,9 @@ export default function DetallesVacante() {
                 }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                         <h2 style={{fontSize: '1.2rem'}}>Postulantes</h2>
-                       
                         <div style={{ display: 'flex', gap: '8px' }}>
-                            <button 
-                                onClick={() => setFiltroEstatus('pendiente')}
-                                style={{ 
-                                    backgroundColor: filtroEstatus === 'pendiente' ? '#007bff' : 'rgba(255,255,255,0.1)', 
-                                    color: 'white', border: 'none', padding: '5px 12px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px' 
-                                }}
-                            >Pendientes</button>
-                            <button 
-                                onClick={() => setFiltroEstatus('rechazado')}
-                                style={{ 
-                                    backgroundColor: filtroEstatus === 'rechazado' ? '#dc3545' : 'rgba(255,255,255,0.1)', 
-                                    color: 'white', border: 'none', padding: '5px 12px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px' 
-                                }}
-                            >Rechazados</button>
+                            <button onClick={() => setFiltroEstatus('pendiente')} style={{ backgroundColor: filtroEstatus === 'pendiente' ? '#007bff' : 'rgba(255,255,255,0.1)', color: 'white', border: 'none', padding: '5px 12px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px' }}>Pendientes</button>
+                            <button onClick={() => setFiltroEstatus('rechazado')} style={{ backgroundColor: filtroEstatus === 'rechazado' ? '#dc3545' : 'rgba(255,255,255,0.1)', color: 'white', border: 'none', padding: '5px 12px', borderRadius: '10px', cursor: 'pointer', fontSize: '12px' }}>Rechazados</button>
                         </div>
                     </div>
                     
@@ -219,60 +206,35 @@ export default function DetallesVacante() {
                                 width:'100%', 
                                 padding : '1rem', 
                                 display : 'flex', 
-                                justifyContent: 'space-between',
-                                alignItems : 'center', 
+                                flexDirection: 'column',
                                 backgroundColor : 'rgba(255, 255, 255, 0.1)', 
                                 borderRadius: '8px',
                                 cursor: 'pointer'
                             }}
                         >
-                            <p style={{ margin: 0 }}>
-                                {item.alumno.usuario.nombre} {item.alumno.usuario.apellido_p} {item.alumno.usuario.apellido_m}   
-                            </p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <p style={{ margin: 0 }}>
+                                    {item.alumno.usuario.nombre} {item.alumno.usuario.apellido_p} {item.alumno.usuario.apellido_m}   
+                                </p>
 
-                            <div style={{display: 'flex', gap: '10px' , alignItems:'center'}} onClick={(e) => e.stopPropagation()}>
-                                <p style={{ margin: 0, fontSize: '12px', opacity: 0.7 }}>{item.estatus}</p>
-                                
-                                {item.estatus === 'pendiente' && (
-                                    <>
-                                        <button 
-                                            onClick={async () => {
-                                                try {
-                                                    await api.put(`/postulaciones/${item.id}`, { estatus: 'aceptado' });
-                                                    setPostulantes(prev => prev.map(p => 
-                                                        p.id === item.id ? { ...p, estatus: 'aceptado' } : p
-                                                    ));
-                                                    alert("Postulante aceptado");
-                                                } catch (error) {
-                                                    console.error(error);
-                                                    alert("Error al aceptar: " + (error.response?.data?.message || "Error del servidor"));
-                                                }
-                                            }}
-                                            style={{backgroundColor: '#28a745', color: 'white' , padding: '7px' , borderRadius : '15px', border: 'none', cursor: 'pointer'}}
-                                        >
-                                            Aceptar
-                                        </button>
-
-                                        <button 
-                                            onClick={async () => {
-                                                try {
-                                                    await api.put(`/postulaciones/${item.id}`, { estatus: 'rechazado' });
-                                                    setPostulantes(prev => prev.map(p => 
-                                                        p.id === item.id ? { ...p, estatus: 'rechazado' } : p
-                                                    ));
-                                                    alert("Postulante rechazado");
-                                                } catch (error) {
-                                                    console.error(error);
-                                                    alert("Error al rechazar");
-                                                }
-                                            }}
-                                            style={{backgroundColor: '#dc3545', color: 'white' , padding : '7px' , borderRadius : '15px', border: 'none', cursor: 'pointer'}}
-                                        >
-                                            Rechazar
-                                        </button>
-                                    </>
-                                )}
+                                <div style={{display: 'flex', gap: '10px' , alignItems:'center'}} onClick={(e) => e.stopPropagation()}>
+                                    <p style={{ margin: 0, fontSize: '12px', opacity: 0.7 }}>{item.estatus}</p>
+                                    {item.estatus === 'pendiente' && (
+                                        <>
+                                            <button onClick={async () => { try { await api.put(`/postulaciones/${item.id}`, { estatus: 'aceptado' }); setPostulantes(prev => prev.map(p => p.id === item.id ? { ...p, estatus: 'aceptado' } : p)); alert("Postulante aceptado"); } catch (error) { console.error(error); alert("Error"); } }} style={{backgroundColor: '#28a745', color: 'white' , padding: '7px' , borderRadius : '15px', border: 'none', cursor: 'pointer'}}>Aceptar</button>
+                                            <button onClick={async () => { try { await api.put(`/postulaciones/${item.id}`, { estatus: 'rechazado' }); setPostulantes(prev => prev.map(p => p.id === item.id ? { ...p, estatus: 'rechazado' } : p)); alert("Postulante rechazado"); } catch (error) { console.error(error); alert("Error"); } }} style={{backgroundColor: '#dc3545', color: 'white' , padding : '7px' , borderRadius : '15px', border: 'none', cursor: 'pointer'}}>Rechazar</button>
+                                        </>
+                                    )}
+                                </div>
                             </div>
+
+                            {item.alumno.recomendaciones?.map((rec) => (
+                                <div key={rec.id} style={{ fontSize: '11px', marginTop: '5px', opacity: 0.8, color: '#00d4ff', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                    <TrophyIcon style={{ width: '14px', height: '14px', color: '#FFD700' }} />
+                                    <span style={{ fontStyle: 'italic', color: '#fff' }}>"{rec.comentario}"</span>
+                                  
+                                </div>
+                            ))}
                         </div>
                     ))}
 
