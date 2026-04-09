@@ -1,9 +1,20 @@
-.content{
+.content {
     background-color: var(--background-color);
-
     grid-row: 1/4;
     grid-column: 2/4;
     padding: 1rem;
     font-family: var(--font-family);
     color: white;
+}
+
+
+
+@media (max-width: 768px) {
+    .content {
+        grid-row: auto;    
+        grid-column: auto; 
+        width: 100%;
+        padding: 0.8rem;  
+        min-height: auto;
+    }
 }

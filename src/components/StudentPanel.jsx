@@ -71,7 +71,7 @@ export default function StudentPerfil({children}){
             
           
             <form className={styles.containerFiltro} onSubmit={ejecutarFiltro}>
-                <div className={styles.formGroup}>
+                <div className={styles.filtroContainer}>
                     <label htmlFor="genero" >Género</label>
                     <select 
                         name="genero" 
@@ -87,7 +87,7 @@ export default function StudentPerfil({children}){
                     </select>
                 </div>
 
-                <div className={styles.formGroup}>
+                <div className={styles.filtroContainer}>
                     <label htmlFor="tiempo" >Turno</label>
                     <select 
                         name="tiempo" 
@@ -103,7 +103,7 @@ export default function StudentPerfil({children}){
                     </select>
                 </div>
                 
-                <div className={styles.formGroup}>
+                <div className={styles.filtroContainer}>
                     <label htmlFor="jornada" >Jornada</label>
                     <select 
                         name="jornada" 
@@ -119,7 +119,7 @@ export default function StudentPerfil({children}){
                     </select>
                 </div>
 
-                <div className={styles.formGroup}>
+                <div className={styles.filtroContainer}>
                     <label htmlFor="modalidad" >Modalidad</label>
                     <select 
                         name="modalidad" 
@@ -134,10 +134,10 @@ export default function StudentPerfil({children}){
                         <option value="Hibrido">Hibrido</option>
                     </select>
                 </div>
-            
+
+                <div className={styles.filtroButton}>
+
                 <Button type="submit" className={styles.button_secondary}>Filtrar</Button>
-                
-      
                 <button 
                     type="button"
                     className={styles.button_secondary} 
@@ -150,8 +150,12 @@ export default function StudentPerfil({children}){
                 >
                     Limpiar
                 </button>
+                </div>
+            
+                
+      
             </form>
-
+              <br />          
             <br /><br />
             <h3>Vacantes para ti</h3>
             <br />

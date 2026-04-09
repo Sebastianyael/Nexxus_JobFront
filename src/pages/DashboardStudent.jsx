@@ -73,7 +73,6 @@ export default function DashboardStudent({ children }) {
         <main className={styles.main}>
             <Aside>
                 <h2 style={{ color: 'var(--main-color)' }}>Nexxus Job </h2>
-                <p className={styles.p}>Navegación</p>
                 
                 <Button 
                     onClick={() => cambiarTab('panelPrincipal')} 
@@ -86,7 +85,7 @@ export default function DashboardStudent({ children }) {
                     text={"Postulaciones"} 
                 />
                 
-                <p className={styles.p}>Cuenta</p>
+           
                 <Button 
                     onClick={() => cambiarTab('perfil')} 
                     className={`${styles.button} ${activeTab === 'perfil' ? styles.active : ''}`} 
@@ -100,7 +99,7 @@ export default function DashboardStudent({ children }) {
                 />
 
 
-                <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px' , marginTop:'320px'}}>
+                <div style={{width: 'auto' , display:'flex', flexDirection:'column' , gap:'20px'}}>
                 <Button onClick={() => goToLogin()} className={styles.eliminarButton} text={'Cerrar Sesion'}/>
                 <Button onClick={() => deleteCount(userId)} className={styles.eliminarButton} text={eliminando ? 'Eliminando...' : 'Eliminar Cuenta'} disabled={eliminando} />
                 </div>

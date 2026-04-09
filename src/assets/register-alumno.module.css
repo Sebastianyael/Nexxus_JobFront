@@ -1,44 +1,38 @@
-
-
-.register_container{
+.register_container {
     font-family: var(--font-family);
     color: rgb(190, 178, 178);
     display: flex;
     flex-direction: column;
     align-items: center;
-  
     min-height: 90vh;
     background-color: var(--background-card);
-    padding: 1rem;
-    width: 70%;
+    padding: 2rem;
+    width: 90%;
+    max-width: 1000px;
     gap: 10px;
     border-radius: 5px;
-    margin: 0 auto;
+    margin: 20px auto;
+    box-sizing: border-box;
 }
 
-.eliminarButtonCrud{
-    width: auto;
-    height: auto;
-    padding: 5px;
-    border-radius: 10px;
-    background-color: red;
-    color: white;
-    max-height: 5vh;
-}
-
-
-.form{
-    min-height: 30vh;
+.form {
     display: flex;
     width: 100%;
-
-    gap: 15px;
+    gap: 10px;
     flex-wrap: wrap;
-    
+    justify-content: space-between;
 }
 
-.input{
-    width: 450px;
+.formGroup {
+    display: flex;
+    gap: 10px;
+    flex-direction: column; 
+    width: 48%; 
+    box-sizing: border-box;
+}
+
+.input {
+    width: 100%;
     height: 50px;
     background-color: var(--background-color);
     outline: none;
@@ -46,37 +40,64 @@
     padding: 1rem;
     font-size: 16px;
     color: white;
+    box-sizing: border-box;
 }
 
-    .input:focus{
-        border: 1px solid var(--main-color);
-        color: var(--main-color);
-    }
+.input:focus {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
 
-.button{
-    max-height: 50px;
-    width: 200px;
+.button {
+    height: 50px;
+    width: 100%;
+    max-width: 300px;
     padding: 10px;
     background-color: var(--main-color);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     transition: 0.3s ease all;
     border-radius: 20px;
-    
+    border: none;
+    color: white;
+    margin-top: 10px;
 }
 
-    .button:hover{
-        cursor: pointer;
-        transform: translateY(5px);
-        transition: 0.3s ease all;
+.button:hover {
+    cursor: pointer;
+    transform: translateY(-5px);
+}
+
+.eliminarButtonCrud {
+    width: 100%;
+    max-width: 300px;
+    height: 50px;
+    padding: 10px;
+    border-radius: 20px;
+    background-color: red;
+    color: white;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease all;
+}
+
+.eliminarButtonCrud:hover {
+    transform: translateY(-5px);
+}
+
+@media (max-width: 768px) {
+    .formGroup {
+        width: 100%;
     }
 
-    .formGroup {
-        display: flex;
-        gap: 15px;
-        flex-direction: column; 
-        width: 49%; 
-        padding: 0.5rem; 
-        box-sizing: border-box;
-        
+    .register_container {
+        width: 95%;
+        padding: 1rem;
     }
+
+    .button, .eliminarButtonCrud {
+        max-width: 100%;
+    }
+}

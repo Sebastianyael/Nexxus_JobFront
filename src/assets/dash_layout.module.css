@@ -1,12 +1,13 @@
-.main{
+/* --- TUS ESTILOS ORIGINALES CON ADAPTACIÓN RESPONSIVA --- */
+
+.main {
     width: 100%;
     min-height: 100vh;
-
     display: grid;
+    /* Cambio a 1 columna en móviles */
     grid-template-columns: 300px auto auto;
-    grid-template-rows: repeat(3 , 1fr);
+    grid-template-rows: repeat(3, 1fr);
     color: var(--secondary-color);
-    
 }
 
 .button.active {
@@ -15,20 +16,19 @@
     font-weight: bold;
 }
 
-.form{
+.form {
     width: 90%;
     max-height: 60vh;
     display: flex;
     flex-wrap: wrap;
 }
 
-.p{
+.p {
     color: var(--secondary-color);
     font-size: 13px;
 }
 
-
-.button{
+.button {
     background-color: transparent;
     border: none;
     color: var(--secondary-color);
@@ -40,11 +40,11 @@
     width: auto;
 }
 
-.icon{
+.icon {
     font-size: 20px;
 }
 
-.buttonActive{
+.buttonActive {
     background-color: var(--main-color);
     border: none;
     color: black;
@@ -56,14 +56,13 @@
     width: auto;
 }
 
-.buttonActive:hover{
+.buttonActive:hover {
     transform: scale(.95);
     transition: 0.4s ease all;
     cursor: pointer;
 }
 
-
-.button:hover ,  .button_secondary:hover{
+.button:hover, .button_secondary:hover {
     color: black;
     background-color: var(--main-color);
     transform: translateX(2px);
@@ -71,15 +70,14 @@
     cursor: pointer;
 }
 
-
-.containerFiltro{
+.containerFiltro {
     display: flex;
     max-width: 60%;
     align-items: center;
     gap: 10px;
 }
 
-.button_secondary{
+.button_secondary {
     background-color: transparent;
     border: 1px solid rgb(132, 130, 130);
     color: var(--secondary-color);
@@ -87,14 +85,12 @@
     border-radius: 20PX;
     display: flex;
     padding: 13px;
-    
     max-width: 100px;
 }
 
-.vacantes_container{
- 
+.vacantes_container {
     max-width: 100%;
-    overflow: scroll;
+    overflow-y: auto;
     max-height: 66vh;
     background-color: transparent;
     display: flex;
@@ -102,26 +98,25 @@
     gap: 20px;
     flex-wrap: wrap;
     align-items: center;
-    
 }
 
-.vacante{
+.vacante {
     background-color: var(--background-card);
     padding: 1rem;
-    width: 1000px;
+    width: 1000px; /* Se ajustará en el media query */
     height: 500px;
     display: flex;
     flex-direction: column;
     border-radius: 15px;
-   justify-content: space-evenly;
-   color: white;
+    justify-content: space-evenly;
+    color: white;
 }
 
-.postulaciones_container{
+.postulaciones_container {
     max-width: 100%;
     height: auto;
     min-height: 90vh;
-    overflow: scroll;
+    overflow-y: auto;
     max-height: 66vh;
     background-color: transparent;
     display: flex;
@@ -129,10 +124,9 @@
     gap: 20px;
     flex-wrap: wrap;
     padding: 1rem;
-    
 }
 
-.postulacion{
+.postulacion {
     background-color: var(--background-card);
     padding: 1rem;
     width: 560px;
@@ -143,15 +137,13 @@
     gap: 20px;
     box-sizing: border-box;
     max-height: 60vh;
-   
 }
 
-
-.miCuentaForm{
+.miCuentaForm {
     max-width: 100%;
     height: auto;
     min-height: 90vh;
-    overflow: scroll;
+    overflow-y: auto;
     max-height: 66vh;
     background-color: transparent;
     display: flex;
@@ -161,45 +153,43 @@
     padding: 1rem;
 }
 
+.input {
+    font-size: 17px;
+    height: 50px;
+    border-radius: 10px;
+    outline: none;
+    background-color: var(--background-card);
+    border: none;
+    box-sizing: border-box;
+    padding: 1rem;
+    color: white;
+    width: 400px;
+}
 
+.input:focus {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
 
-    .input{
-        font-size: 17px;
-        height: 50px;
-        border-radius: 10px;
-        outline: none;
-        background-color: var(--background-card);
-        border: none;
-        box-sizing: border-box;
-        padding: 1rem;
-        color: white;
-        width: 400px;
-    }
+.input_dos {
+    font-size: 17px;
+    height: 50px;
+    border-radius: 10px;
+    outline: none;
+    background-color: var(--background-color);
+    border: none;
+    box-sizing: border-box;
+    padding: 1rem;
+    color: white;
+    width: 400px;
+}
 
-    .input:focus{
-        border:1px solid var(--main-color);
-        color: var(--main-color);
-    }
+.input_dos:focus {
+    border: 1px solid var(--main-color);
+    color: var(--main-color);
+}
 
-    .input_dos{
-        font-size: 17px;
-        height: 50px;
-        border-radius: 10px;
-        outline: none;
-        background-color: var(--background-color);
-        border: none;
-        box-sizing: border-box;
-        padding: 1rem;
-        color: white;
-        width: 400px;
-    }
-    
-    .input_dos:focus{
-        border:1px solid var(--main-color);
-        color: var(--main-color);
-    }
-
-.eliminarButton{
+.eliminarButton {
     transition: 0.3s ease all;
     color: red;
     font-size: 11px;
@@ -207,22 +197,20 @@
     display: flex;
     place-content: center;
     gap: 10px;
-    border : none;
+    border: none;
     background-color: transparent;
     border-radius: 10px;
     width: 100%;
-
 }
 
-.eliminarButton:hover{
-        border: none;
-        background-color: black;
-        cursor: pointer;
-        transition: 0.3s ease all;
-        
-    }
+.eliminarButton:hover {
+    border: none;
+    background-color: black;
+    cursor: pointer;
+    transition: 0.3s ease all;
+}
 
-.postulacionesForm{
+.postulacionesForm {
     width: 100%;
     min-height: 30vh;
     gap: 20px;
@@ -230,34 +218,30 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
 }
 
-    .postulacionesForm input , textarea{
-        width: 330px;
-        height: auto;
-    }
+.postulacionesForm input, .postulacionesForm textarea {
+    width: 330px;
+    height: auto;
+}
 
-    .postulacionesForm textarea{
-        height: 10vh;
-    }
+.postulacionesForm textarea {
+    height: 10vh;
+}
 
-
-.editarButton{
+.editarButton {
     width: 100px;
     height: 50px;
     padding: 5px;
     border-radius: 10px;
     background-color: var(--main-color);
-
 }
 
+.editarButton:hover {
+    cursor: pointer;
+}
 
-    .editarButton:hover{
-        cursor: pointer;
-    }
-
-.eliminarButtonCrud{
+.eliminarButtonCrud {
     width: 100px;
     height: auto;
     padding: 5px;
@@ -266,36 +250,43 @@
     color: white;
 }
 
-.vacantes_publicadas{
+.vacantes_publicadas {
     width: 100%;
     padding: 1rem;
-
     max-height: 94vh;
-    overflow: scroll;
+    overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    
 }
 
 .formGroup {
     display: flex;
     gap: 15px;
-    flex-direction: column; 
-    width: 49%; 
-    padding: 0.5rem; 
+    flex-direction: column;
+    width: 49%;
+    padding: 0.5rem;
     box-sizing: border-box;
 }
 
-.filtroInput{
+.filtroContainer{
+    display: flex;
+    gap: 15px;
+    flex-direction: column;
+    width: 49%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    
+}
+
+.filtroInput {
     width: 100px;
     padding: 10px;
     background-color: var(--background-color);
     color: var(--main-color);
 }
 
-
-.vacanteEmpresa{
+.vacanteEmpresa {
     background-color: var(--background-card);
     padding: 1rem;
     width: 360px;
@@ -303,28 +294,82 @@
     display: flex;
     flex-direction: column;
     border-radius: 15px;
-   justify-content: space-evenly;
-   color: white;
-}
-
-::-webkit-scrollbar {
-    width: 8px;  
-    height: 8px; 
-}
-
-::-webkit-scrollbar-track {
-    background: #1e1e1e;
-    border-radius: 10px;
+    justify-content: space-evenly;
+    color: white;
 }
 
 
-::-webkit-scrollbar-thumb {
-    background: #4a4a4a;
-    border-radius: 10px;
-    border: 2px solid #1e1e1e;
-}
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #1e1e1e; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background: #4a4a4a; border-radius: 10px; border: 2px solid #1e1e1e; }
+::-webkit-scrollbar-thumb:hover { background: #5a5a5a; }
 
 
-::-webkit-scrollbar-thumb:hover {
-    background: #5a5a5a
+@media (max-width: 768px) {
+    .main {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .form {
+        width: 100%;
+        max-height: none;
+    }
+
+    .containerFiltro {
+        max-width: 100%;
+        flex-wrap: wrap;
+        display: flex;
+       gap: 40px;
+
+    }
+
+    .filtroButton{
+        display: flex;
+        place-content: center;
+        gap: 10px;
+        margin-bottom: -50px !important;
+    }
+
+    .vacante {
+        width: 100%; 
+        height: auto;
+        min-height: 350px;
+    }
+
+    .postulacion {
+        width: 100%;
+        height: auto;
+    }
+
+    .input, .input_dos {
+        width: 100%; 
+    }
+
+    .formGroup {
+        width: 100%;
+    }
+
+    .filtroContainer{
+        width: 20%;
+        height: 5vh;
+    }
+
+    .postulacionesForm {
+        flex-direction: column;
+    }
+
+    .postulacionesForm input, .postulacionesForm textarea {
+        width: 100%;
+    }
+
+    .vacanteEmpresa {
+        width: 100%;
+    }
+
+    .vacantes_container, .postulaciones_container, .miCuentaForm, .vacantes_publicadas {
+        max-height: none; 
+        overflow: visible;
+    }
 }
