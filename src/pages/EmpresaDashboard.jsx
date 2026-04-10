@@ -73,7 +73,7 @@ export default function EmpresaDashboard({children}){
             <main className={styles.main} >
                 <Aside>
                     <h2 style={{ color: 'var(--main-color)' }}>Nexxus Job </h2>
-                    <p className={styles.p}>Navegación</p>
+                 
 
                 
                     <Button 
